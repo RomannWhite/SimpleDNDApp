@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:DNDApp.VM"
+             xmlns:converters="clr-namespace:DNDApp.Converters"
+             Title="Inventory"
+             x:Class="DNDApp.InventoryPage">
+    <ContentPage.Resources>
+        <converters:BoolNotConverter x:Key="Not"/>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <vm:InventoryPageVIewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="Вcего денег:"
+                       VerticalOptions="Center"
+                       TextColor="Black"
+                       FontSize="16"/>
+                <Entry Grid.Column="1"
+                       Text="{Binding TotalMoney}"/>
+            </Grid>
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding InventoryList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid IsVisible="{Binding IsEditable, Converter={StaticResource Not}}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectCommand}"/>
+                                </Grid.GestureRecognizers>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding Title}" Grid.RowSpan="2"
+                                   TextColor="Black"
+                                   VerticalOptions="Center"
+                                   Margin="10, 0, 0, 0"
+                                   FontSize="18"/>
+                                <Label Text="{Binding Amount, StringFormat='{0} шт.'}"
+                                   VerticalOptions="Center"
+                                   Grid.Column="1"
+                                   TextColor="Black"/>
+                                <Label Text="{Binding Price, StringFormat='₽ {0}'}"
+                                   VerticalOptions="Center"
+                                   Grid.Column="1"
+                                   Grid.Row="1"
+                                   TextColor="Black"/>
+                            </Grid>
+                            <Grid IsVisible="{Binding IsEditable}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectCommand}"/>
+                                </Grid.GestureRecognizers>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Editor Text="{Binding Title, Mode=TwoWay}" Grid.RowSpan="2"
+                                   TextColor="Black"
+                                   VerticalOptions="Center"
+                                   Margin="10, 0, 0, 0"
+                                   FontSize="18"/>
+                                <Grid Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Text="+"
+                                            FontSize="18"
+                                            WidthRequest="40"
+                                            BackgroundColor="#3377FF"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Center"
+                                            Command="{Binding AddCommand}"/>
+                                    <Entry Text="{Binding Amount, Mode=TwoWay}"
+                                           Grid.Column="1"
+                                           VerticalOptions="Center"
+                                           Keyboard="Numeric"
+                                           TextColor="Black"/>
+                                    <Button Text="-"
+                                            Grid.Column="2"
+                                            FontSize="18"
+                                            WidthRequest="40"
+                                            BackgroundColor="#FF6666"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Center"
+                                            Command="{Binding RemoveCommand}"/>
+                                </Grid>
+                                <Entry Text="{Binding Price, Mode=TwoWay}"
+                                       VerticalOptions="Center"
+                                       Grid.Column="1"
+                                       Grid.Row="1"
+                                       Keyboard="Numeric"
+                                       TextColor="Black"/>
+                                <Button Grid.Column="2"
+                                        Grid.RowSpan="2"
+                                        Text="Ok"
+                                        Background="LightGreen"
+                                        Margin="0, 0, 10, 0"
+                                        WidthRequest="50"
+                                        HeightRequest="50"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="End"
+                                        Command="{Binding SaveCommand}"/>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Grid.Row="1"
+                    HeightRequest="80"
+                    WidthRequest="80"
+                    VerticalOptions="End"
+                    HorizontalOptions="End"
+                    Text="Add"
+                    FontSize="20"
+                    Margin="0, 0, 50, 30"
+                    BackgroundColor="#3377FF"
+                    Command="{Binding AddItemCommand}"/>
+            <Label Grid.Row="1"
+                   HorizontalOptions="End"
+                   VerticalOptions="End"
+                   Margin="0, 0, 20, 5"
+                   TextColor="Black"
+                   Text="{Binding TotalCost, StringFormat='Общая стоимость: {0}₽'}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

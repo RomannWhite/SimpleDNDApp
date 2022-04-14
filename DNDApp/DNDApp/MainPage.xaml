@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:dndapp="clr-namespace:DNDApp"
+       x:Class="DNDApp.MainPage">
+    <FlyoutItem Title="Inventory">
+        <ShellContent ContentTemplate="{DataTemplate dndapp:InventoryPage}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="Weapon">
+        <ShellContent ContentTemplate="{DataTemplate dndapp:WeaponPage}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="Stats">
+        <ShellContent ContentTemplate="{DataTemplate dndapp:StatsPage}"/>
+    </FlyoutItem>
+</Shell>

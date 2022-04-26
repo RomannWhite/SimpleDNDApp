@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace DNDApp
 {
-    public partial class MainPage : Shell
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class LoadConfigPage : ContentPage
     {
-        public MainPage()
+        public LoadConfigPage()
         {
             InitializeComponent();
         }

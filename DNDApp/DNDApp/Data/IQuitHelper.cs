@@ -4,8 +4,8 @@ using System.Text;
 
 namespace DNDApp.Data
 {
-    class NumericEventArgs : EventArgs
+    public interface IQuitHelper
     {
-        public int Value { get; set; }
+        void Quit();
     }
 }

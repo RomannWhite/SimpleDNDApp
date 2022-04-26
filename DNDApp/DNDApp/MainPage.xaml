@@ -6,9 +6,9 @@
     <FlyoutItem Title="Inventory">
         <ShellContent ContentTemplate="{DataTemplate dndapp:InventoryPage}"/>
     </FlyoutItem>
-    <FlyoutItem Title="Weapon">
+    <!--<FlyoutItem Title="Weapon">
         <ShellContent ContentTemplate="{DataTemplate dndapp:WeaponPage}"/>
-    </FlyoutItem>
+    </FlyoutItem>-->
     <FlyoutItem Title="Stats">
         <ShellContent ContentTemplate="{DataTemplate dndapp:StatsPage}"/>
     </FlyoutItem>

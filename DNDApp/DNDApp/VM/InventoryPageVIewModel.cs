@@ -6,15 +6,15 @@ using System.Linq;
 
 namespace DNDApp.VM
 {
-    public class InventoryPageVIewModel : BaseViewModel
+    public class InventoryPageViewModel : BaseViewModel
     {
-        public InventoryPageVIewModel()
+        public InventoryPageViewModel()
         {
             InventoryList = new ObservableCollection<InventoryItem>(DataKeeper.LoadInventory());
             foreach (InventoryItem item in InventoryList)
                 item.RemoveEvent += (s, e) => InventoryList.Remove((InventoryItem)s);
             AddItemCommand = new Command(OnAddItem);
-            InventoryItem.ChangeEvent += (s, e) => OnPropertyChanged(nameof(TotalCost));
+            InventoryItem.ChangeEvent += (s, e) => OnPropertyChanged(nameof(TotalInfo));
         }
         void OnAddItem(object obj)
         {
@@ -37,7 +37,7 @@ namespace DNDApp.VM
                 OnPropertyChanged();
             }
         }
-        public int TotalCost => InventoryList.Select(i => i.Price * i.Amount).Sum();
+        public string TotalInfo => $"Общая стоимость: {InventoryList.Select(i => i.Price * i.Amount).Sum()}₽, вес: {InventoryList.Select(i => i.Weight * i.Amount).Sum()}кг";
         public int TotalMoney
         {
             get => (int)DataKeeper.LoadData(DataKeeper.TotalMoneyTag);

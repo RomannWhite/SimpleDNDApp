@@ -61,5 +61,15 @@ namespace DNDApp.VM
                 OnPropertyChanged();
             }
         }
+        int weight;
+        public int Weight
+        {
+            get => weight;
+            set
+            {
+                weight = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

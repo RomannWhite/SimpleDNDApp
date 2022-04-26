@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:DNDApp.VM"
              xmlns:converters="clr-namespace:DNDApp.Converters"
-             Title="StatsPage"
+             Title="Stats"
              x:Name="VM"
              x:Class="DNDApp.StatsPage">
     <ContentPage.Resources>
@@ -13,18 +13,105 @@
     <ContentPage.BindingContext>
         <vm:StatsPageViewModel/>
     </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Load config"
+                     Command="{Binding LoadConfigCommand}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Text="Доступно очков:"
+            <Grid IsVisible="{Binding IsMainEditable, Converter={StaticResource Not}}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding EditMainCommand}"/>
+                </Grid.GestureRecognizers>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Text="Сила"
+                       VerticalOptions="Center"/>
+                <Label Grid.Row="1"
+                       Text="Ловскость"
+                       VerticalOptions="Center"/>
+                <Label Grid.Row="2"
+                       Text="Выносливость"
+                       VerticalOptions="Center"/>
+                <Label Grid.Column="1"
+                       Margin="20, 0, 0, 0"
+                       TextColor="Black"
+                       FontSize="18"
+                       Text="{Binding Force}"/>
+                <Label Grid.Column="1"
+                       Margin="20, 0, 0, 0"
+                       TextColor="Black"
+                       FontSize="18"
+                       Grid.Row="1"
+                       Text="{Binding Agility}"/>
+                <Label Grid.Column="1"
+                       Margin="20, 0, 0, 0"
+                       TextColor="Black"
+                       FontSize="18"
+                       Grid.Row="2"
+                       Text="{Binding Endurance}"/>
+            </Grid>
+            <Grid IsVisible="{Binding IsMainEditable}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="Сила"
+                       VerticalOptions="Center"/>
+                <Label Grid.Row="1"
+                       Text="Ловскость"
+                       VerticalOptions="Center"/>
+                <Label Grid.Row="2"
+                       Text="Выносливость"
+                       VerticalOptions="Center"/>
+                <Entry Grid.Column="1"
+                       TextColor="Black"
+                       FontSize="18"
+                       Text="{Binding Force}"/>
+                <Entry Grid.Column="1"
+                       TextColor="Black"
+                       FontSize="18"
+                       Grid.Row="1"
+                       Text="{Binding Agility}"/>
+                <Entry Grid.Column="1" 
+                       TextColor="Black"
+                       FontSize="18"
+                       Grid.Row="2"
+                       Text="{Binding Endurance}"/>
+                <Button Grid.Column="2"
+                        Grid.RowSpan="3"
+                        Text="Ok"
+                        FontSize="20"
+                        Margin="3"
+                        BackgroundColor="#3377FF"
+                        TextColor="Black"
+                        Command="{Binding SaveMainCommand}"/>
+            </Grid>
+            <Label Grid.Row="1"
+                   Text="Доступно очков:"
                    WidthRequest="120"
                    Margin="0, 0, 120, -20"
                    HorizontalOptions="Center"/>
-            <Grid Grid.Row="1" >
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="*"/>
@@ -44,11 +131,12 @@
                         Command="{Binding AddPointCommand}"/>
             </Grid>
             <CollectionView ItemsSource="{Binding States}"
-                            Grid.Row="2">
+                            Margin="5, 0, 0, 0"
+                            Grid.Row="3">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <Grid Margin="5, 0, 0, 0"
+                        <Grid Margin="0, 5, 5, 0">
+                            <Grid
                                   IsVisible="{Binding IsEditable, Converter={StaticResource Not}}">
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding SelectCommand}"/>
@@ -91,35 +179,46 @@
                                     <ColumnDefinition Width="50"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
-                                <Button Command="{Binding SelectCommand}"/>
+                                <Label Text="{Binding Title}"
+                                       Grid.ColumnSpan="3"
+                                       TextColor="Black"
+                                       FontSize="18"/>
                                 <Button Text="-"
+                                        Grid.Row="1"
                                         Command="{Binding RemovePointCommand}"/>
                                 <Label Text="{Binding Amount}"
+                                        Grid.Row="1"
                                        TextColor="Black"
                                        FontSize="18"
                                        VerticalOptions="Center"
                                        HorizontalOptions="Center"
                                        Grid.Column="1"/>
+                                <Button Text="+"
+                                        Grid.Row="1"
+                                        Grid.Column="2"
+                                        Command="{Binding AddPointCommand}"/>
+                                <Button Text="OK"
+                                        Grid.Row="1"
+                                        Grid.Column="3"
+                                        Command="{Binding SaveCommand}"/>
+                                <Label Text="{Binding UpgradeСostDescription, StringFormat='Стоимость уровней: {0}'}"
+                                       Grid.Row="2"
+                                       Grid.ColumnSpan="4"/>
                                 <Label Text="{Binding Description}"
                                        IsVisible="{Binding Description, Source={Reference VM}, Converter={StaticResource Key=IsNotEmpty}}"
                                        Grid.ColumnSpan="3"
                                        TextColor="#0088FF"
-                                       Margin="0, -15, 0, 5"
-                                       Grid.Row="2"/>
-                                <Button Text="+"
-                                        Grid.Column="2"
-                                        Command="{Binding AddPointCommand}"/>
-                                <Button Text="OK"
-                                        Grid.Column="3"
-                                        Command="{Binding SaveCommand}"/>
-                                <Label Text="{Binding UpgradeСostDescription, StringFormat='Стоимость уровней: {0}'}"
-                                       Grid.Row="1"
-                                       Grid.ColumnSpan="4"/>
+                                       Margin="0, -7, 0, 5"
+                                       Grid.Row="3"/>
                             </Grid>
+                            <Line HeightRequest="1"
+                                  VerticalOptions="End"
+                                  BackgroundColor="LightGray"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

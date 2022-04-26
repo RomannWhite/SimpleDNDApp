@@ -7,9 +7,10 @@
              x:Class="DNDApp.InventoryPage">
     <ContentPage.Resources>
         <converters:BoolNotConverter x:Key="Not"/>
+        <converters:IsNotZeroConverter x:Key="NotZero"/>
     </ContentPage.Resources>
     <ContentPage.BindingContext>
-        <vm:InventoryPageVIewModel/>
+        <vm:InventoryPageViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <Grid>
@@ -34,7 +35,8 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <Grid IsVisible="{Binding IsEditable, Converter={StaticResource Not}}">
+                            <Grid IsVisible="{Binding IsEditable, Converter={StaticResource Not}}"
+                                  Margin="0, 5">
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding SelectCommand}"/>
                                 </Grid.GestureRecognizers>
@@ -45,23 +47,31 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
+                                    <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
                                 <Label Text="{Binding Title}" Grid.RowSpan="2"
-                                   TextColor="Black"
-                                   VerticalOptions="Center"
-                                   Margin="10, 0, 0, 0"
-                                   FontSize="18"/>
+                                       TextColor="Black"
+                                       VerticalOptions="Center"
+                                       Margin="10, 0, 0, 0"
+                                       FontSize="18"/>
                                 <Label Text="{Binding Amount, StringFormat='{0} шт.'}"
-                                   VerticalOptions="Center"
-                                   Grid.Column="1"
-                                   TextColor="Black"/>
+                                       VerticalOptions="Center"
+                                       Grid.Column="1"
+                                       TextColor="Black"/>
                                 <Label Text="{Binding Price, StringFormat='₽ {0}'}"
-                                   VerticalOptions="Center"
-                                   Grid.Column="1"
-                                   Grid.Row="1"
-                                   TextColor="Black"/>
+                                       VerticalOptions="Center"
+                                       Grid.Column="1"
+                                       Grid.Row="1"
+                                       TextColor="Black"/>
+                                <Label Text="{Binding Weight, StringFormat='{0} кг'}"
+                                       IsVisible="{Binding Weight, Converter={StaticResource NotZero}}"
+                                       VerticalOptions="Center"
+                                       Grid.Column="1"
+                                       Grid.Row="2"
+                                       TextColor="Black"/>
                             </Grid>
-                            <Grid IsVisible="{Binding IsEditable}">
+                            <Grid IsVisible="{Binding IsEditable}"
+                                  Margin="0, 5, 0, 0">
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding SelectCommand}"/>
                                 </Grid.GestureRecognizers>
@@ -71,6 +81,7 @@
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
@@ -92,6 +103,11 @@
                                             VerticalOptions="Center"
                                             HorizontalOptions="Center"
                                             Command="{Binding AddCommand}"/>
+                                    <Label Text="шт"
+                                           Grid.Column="1"
+                                           HorizontalTextAlignment="End"
+                                           VerticalOptions="Center" 
+                                           Margin="0, 0, 5, 0"/>
                                     <Entry Text="{Binding Amount, Mode=TwoWay}"
                                            Grid.Column="1"
                                            VerticalOptions="Center"
@@ -106,10 +122,28 @@
                                             HorizontalOptions="Center"
                                             Command="{Binding RemoveCommand}"/>
                                 </Grid>
+                                <Label Text="₽"
+                                       Grid.Column="1"
+                                       Grid.Row="1"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="End"
+                                       Margin="0, 0, 5, 0"/>
                                 <Entry Text="{Binding Price, Mode=TwoWay}"
                                        VerticalOptions="Center"
                                        Grid.Column="1"
                                        Grid.Row="1"
+                                       Keyboard="Numeric"
+                                       TextColor="Black"/>
+                                <Label Text="кг"
+                                       Grid.Column="1"
+                                       Grid.Row="2"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="End"
+                                       Margin="0, 0, 5, 0"/>
+                                <Entry Text="{Binding Weight, Mode=TwoWay}"
+                                       VerticalOptions="Center"
+                                       Grid.Column="1"
+                                       Grid.Row="2"
                                        Keyboard="Numeric"
                                        TextColor="Black"/>
                                 <Button Grid.Column="2"
@@ -123,6 +157,7 @@
                                         HorizontalOptions="End"
                                         Command="{Binding SaveCommand}"/>
                             </Grid>
+                            <Line BackgroundColor="LightGray" HeightRequest="1" VerticalOptions="End" Margin="10, 0"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -142,7 +177,7 @@
                    VerticalOptions="End"
                    Margin="0, 0, 20, 5"
                    TextColor="Black"
-                   Text="{Binding TotalCost, StringFormat='Общая стоимость: {0}₽'}"/>
+                   Text="{Binding TotalInfo}"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

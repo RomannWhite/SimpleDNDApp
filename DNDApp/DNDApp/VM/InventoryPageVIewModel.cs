@@ -12,9 +12,17 @@ namespace DNDApp.VM
         {
             InventoryList = new ObservableCollection<InventoryItem>(DataKeeper.LoadInventory());
             foreach (InventoryItem item in InventoryList)
-                item.RemoveEvent += (s, e) => InventoryList.Remove((InventoryItem)s);
+                item.RemoveEvent += (s, e) =>
+                {
+                    InventoryList.Remove((InventoryItem)s);
+                    DataKeeper.SaveInventory(InventoryList.ToList());
+                };
             AddItemCommand = new Command(OnAddItem);
-            InventoryItem.ChangeEvent += (s, e) => OnPropertyChanged(nameof(TotalInfo));
+            InventoryItem.ChangeEvent += (s, e) =>
+            {
+                OnPropertyChanged(nameof(TotalInfo));
+                DataKeeper.SaveInventory(InventoryList.ToList());
+            };
         }
         void OnAddItem(object obj)
         {
@@ -40,7 +48,7 @@ namespace DNDApp.VM
         public string TotalInfo => $"Общая стоимость: {InventoryList.Select(i => i.Price * i.Amount).Sum()}₽, вес: {InventoryList.Select(i => i.Weight * i.Amount).Sum()}кг";
         public int TotalMoney
         {
-            get => (int)DataKeeper.LoadData(DataKeeper.TotalMoneyTag);
+            get => DataKeeper.LoadData(DataKeeper.TotalMoneyTag);
             set
             {
                 DataKeeper.SaveData(value, DataKeeper.TotalMoneyTag);

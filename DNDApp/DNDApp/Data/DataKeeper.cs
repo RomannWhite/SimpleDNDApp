@@ -5,6 +5,7 @@ using DNDApp.VM;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace DNDApp.Data
 {
@@ -16,6 +17,7 @@ namespace DNDApp.Data
         public const string AgilityTag = "Agility";
         public const string EnduranceTag = "Endurance";
         const string AllInventoryItemTag = "AllInventoryItems";
+        const string WeaponsTag = "AllWeaponsTag";
         const string StateItemsTag = "StateItems";
         const string StateItemsValuesTag = "StateItemsValues";
         public static async Task SaveNewStats(string newstats)
@@ -37,7 +39,7 @@ namespace DNDApp.Data
         }
         public static void SaveStates(List<StateItem> value)
         {
-            SecureStorage.SetAsync(StateItemsTag, string.Join("\n", value.Select(r => $"{r.Title}\t{r.UpgradeСostDescription}\t{r.Description}")));
+            SecureStorage.SetAsync(StateItemsTag, string.Join("\n", value.Select(r => $"{r.Title}\t{r.UpgradeCostDescription}\t{r.Description}")));
             SecureStorage.SetAsync(StateItemsValuesTag, string.Join("\n", value.Select(r => $"{r.Title}\t{r.Amount}")));
         }
         public static List<StateItem> LoadStates()
@@ -53,7 +55,7 @@ namespace DNDApp.Data
                         Result.Add(new StateItem()
                         {
                             Title = RawDataItemArray[0],
-                            UpgradeСostDescription = RawDataItemArray[1],
+                            UpgradeCostDescription = RawDataItemArray[1],
                         });
                     if (RawDataItemArray.Length > 2)
                         Result.Last().Description = RawDataItemArray[2];
@@ -72,6 +74,31 @@ namespace DNDApp.Data
                 SecureStorage.SetAsync(StateItemsValuesTag, string.Join("\n", Result.Select(r => $"{r.Title}\t{r.Amount}")));
             }
             return Result;
+        }
+        public static void SaveWeapons(List<Weapon> items)
+        {
+            string SerializedItems = JsonConvert.SerializeObject(items);
+            SecureStorage.SetAsync(WeaponsTag, SerializedItems);
+        }
+        public static List<Weapon> LoadWeapons()
+        {
+            string SerializedItems = SecureStorage.GetAsync(WeaponsTag).Result;
+            if (!string.IsNullOrEmpty(SerializedItems))
+                try
+                {
+                    return JsonConvert.DeserializeObject<List<Weapon>>(SerializedItems);
+                }
+                catch (System.Exception Ex)
+                {
+                    return new List<Weapon>()
+                    {
+                        new Weapon()
+                        {
+                            Title = "Deserialize error"
+                        }
+                    };
+                }
+            return new List<Weapon>();
         }
         public static void SaveInventory(List<InventoryItem> items)
         {

@@ -153,7 +153,7 @@
                                 <Label Text="{Binding Title}"
                                        TextColor="Black"
                                        FontSize="18"/>
-                                <Label Text="{Binding UpgradeСostDescription, StringFormat='Стоимость уровней: {0}'}"
+                                <Label Text="{Binding UpgradeCostDescription, StringFormat='Стоимость уровней: {0}'}"
                                        Grid.ColumnSpan="2"
                                        Grid.Row="1"/>
                                 <Label Text="{Binding Description}"
@@ -206,7 +206,7 @@
                                         Grid.Row="1"
                                         Grid.Column="3"
                                         Command="{Binding SaveCommand}"/>
-                                <Label Text="{Binding UpgradeСostDescription, StringFormat='Стоимость уровней: {0}'}"
+                                <Label Text="{Binding UpgradeCostDescription, StringFormat='Стоимость уровней: {0}'}"
                                        Grid.Row="2"
                                        Grid.ColumnSpan="4"/>
                                 <Label Text="{Binding Description}"

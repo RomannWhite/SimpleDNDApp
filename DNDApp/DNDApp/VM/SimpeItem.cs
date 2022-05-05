@@ -5,9 +5,14 @@ namespace DNDApp.VM
 {
     public class SimpeItem : BaseViewModel
     {
+        delegate void EditHandler();
+        static event EditHandler OnEditStarted;
         #region IsEditable
-        public ICommand SelectCommand { get; set; }
-        public ICommand SaveCommand { get; set; }
+        public SimpeItem()
+        {
+            OnEditStarted += () => IsEditable = false;
+        }
+        [JsonIgnore]
         bool iseditable;
         [JsonIgnore]
         public bool IsEditable
@@ -15,11 +20,24 @@ namespace DNDApp.VM
             get => iseditable;
             set
             {
+                if(value)
+                    OnEditStarted?.Invoke();
                 iseditable = value;
                 OnPropertyChanged();
             }
         }
         #endregion
+        #region Commands
+        [JsonIgnore]
+        public ICommand SelectCommand { get; set; }
+        [JsonIgnore]
+        public ICommand RemoveCommand { get; set; }
+        [JsonIgnore]
+        public ICommand SaveCommand { get; set; }
+        [JsonIgnore]
+        public ICommand AddCommand { get; set; }
+        #endregion
+        [JsonIgnore]
         string title;
         public string Title
         {
@@ -27,6 +45,17 @@ namespace DNDApp.VM
             set
             {
                 title = value;
+                OnPropertyChanged();
+            }
+        }
+        [JsonIgnore]
+        int weight;
+        public int Weight
+        {
+            get => weight;
+            set
+            {
+                weight = value;
                 OnPropertyChanged();
             }
         }

@@ -1,9 +1,10 @@
-﻿using System.Windows.Input;
+﻿using Newtonsoft.Json;
 
 namespace DNDApp.VM
 {
-    public class BaseItem : SimpeItem
+    public class CountableItem : SimpeItem
     {
+        [JsonIgnore]
         int amount;
         public int Amount
         {
@@ -14,7 +15,5 @@ namespace DNDApp.VM
                 OnPropertyChanged();
             }
         }
-        public ICommand RemoveCommand { get; set; }
-        public ICommand AddCommand { get; set; }
     }
 }

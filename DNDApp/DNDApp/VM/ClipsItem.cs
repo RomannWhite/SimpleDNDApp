@@ -2,16 +2,16 @@
 
 namespace DNDApp.VM
 {
-    public class WeaponItem : SimpeItem
+    public class ClipsItem : WeaponItem
     {
         [JsonIgnore]
-        int vl;
-        public int Value
+        int capacity;
+        public int Capacity
         {
-            get => vl;
+            get => capacity;
             set
             {
-                vl = value;
+                capacity = value;
                 OnPropertyChanged();
             }
         }

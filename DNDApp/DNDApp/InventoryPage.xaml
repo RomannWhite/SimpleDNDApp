@@ -12,11 +12,16 @@
     <ContentPage.BindingContext>
         <vm:InventoryPageViewModel/>
     </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add"
+                     Command="{Binding AddItemCommand}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -162,17 +167,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Button Grid.Row="1"
-                    HeightRequest="80"
-                    WidthRequest="80"
-                    VerticalOptions="End"
-                    HorizontalOptions="End"
-                    Text="Add"
-                    FontSize="20"
-                    Margin="0, 0, 50, 30"
-                    BackgroundColor="#3377FF"
-                    Command="{Binding AddItemCommand}"/>
-            <Label Grid.Row="1"
+            <Label Grid.Row="2"
                    HorizontalOptions="End"
                    VerticalOptions="End"
                    Margin="0, 0, 20, 5"

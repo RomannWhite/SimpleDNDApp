@@ -1,244 +1,355 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:DNDApp.VM"
+             xmlns:converters="clr-namespace:DNDApp.Converters"
              Title="Weapon"
              x:Class="DNDApp.WeaponPage">
+    <ContentPage.BindingContext>
+        <vm:WeaponPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <converters:BoolNotConverter x:Key="Not"/>
+        <converters:IsNotZeroConverter x:Key="NotZeroChecker"/>
+        <converters:MultipliConverter x:Key="Multiplicator"/>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add"
+                     Command="{Binding AddItemCommand}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <!--<CollectionView>
-                
-            </CollectionView>-->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label Text="Вcего денег:"
-                       VerticalOptions="Center"
-                       TextColor="Black"
-                       FontSize="16"/>
-                <Entry Grid.Column="1"
-                       Text="{Binding TotalMoney}"/>
-            </Grid>
-            <ScrollView Grid.Row="1">
-
-                <StackLayout Margin="5, 0, 0, 0"
-                         Grid.Row="1">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="АК47"
-                               FontSize="36"
-                               TextColor="Black"/>
-                            <Label Text="5.45, 100м"
-                               TextColor="Black"
-                               VerticalOptions="End"/>
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal"
-                                 Grid.Row="1">
-                            <Label Text="Подствольник; Оптика х3; Калиматор"
-                               TextColor="Black"
-                               VerticalOptions="End"/>
-                        </StackLayout>
-                        <StackLayout Grid.Row="2">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="Обоймы:"
-                                   FontSize="16"
-                                   TextColor="Black"/>
-                                <Label Text="3"
-                                   FontSize="16"
-                                   TextColor="Black"
-                                   Grid.Column="1"/>
-                            </Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="ББ патрон:"
-                                   FontSize="16"
-                                   TextColor="Black"/>
-                                <Label Text="20"
-                                   FontSize="16"
-                                   TextColor="Black"
-                                   Grid.Column="1"/>
-                            </Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="Патрон:"
-                                   FontSize="16"
-                                   TextColor="Black"/>
-                                <Label Text="50"
-                                   FontSize="16"
-                                   TextColor="Black"
-                                   Grid.Column="1"/>
-                            </Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="Граната:"
-                                   FontSize="16"
-                                   TextColor="Black"/>
-                                <Label Text="1"
-                                   FontSize="16"
-                                   TextColor="Black"
-                                   Grid.Column="1"/>
-                            </Grid>
-                        </StackLayout>
-                        <Button Grid.Row="2"
-                            VerticalOptions="End"
-                            HorizontalOptions="End"
-                            HeightRequest="50"
-                            WidthRequest="50"
-                            Text="*"
-                            FontSize="27"
-                            Margin="0, 0, 10, 0"
-                            BackgroundColor="#3377FF"/>
-                    </Grid>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <Entry Text="АК47"
-                               HorizontalOptions="FillAndExpand"
-                               FontSize="36"
-                               TextColor="Black"/>
-                        <StackLayout Orientation="Horizontal"
-                                 Grid.Row="1">
-                            <Label Text="Патрон:"
-                               VerticalOptions="Center"
-                               TextColor="Black"/>
-                            <Entry Text="5.45"
-                               WidthRequest="120"
-                               TextColor="Black"/>
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal"
-                                 Grid.Row="2">
-                            <Label Text="Дальность:"
-                               VerticalOptions="Center"
-                               TextColor="Black"/>
-                            <Entry Text="100"
-                               WidthRequest="120"
-                               TextColor="Black"/>
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal"
-                                 Grid.Row="3">
-                            <Label Text="Оптика: Х"
-                               VerticalOptions="Center"
-                               TextColor="Black"/>
-                            <Entry Text="1"
-                               WidthRequest="120"
-                               TextColor="Black"/>
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal"
-                                 Grid.Row="4">
-                            <Label Text="Калиматор: "
-                               VerticalOptions="Center"
-                               TextColor="Black"/>
-                            <CheckBox/>
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal"
-                                 Grid.Row="5">
-                            <Label Text="Подствольник: "
-                               VerticalOptions="Center"
-                               TextColor="Black"/>
-                            <CheckBox/>
-                        </StackLayout>
-                        <StackLayout Grid.Row="6">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Entry Text="Обоймы:"
-                                   FontSize="16"
-                                   TextColor="Black"/>
-                                <Entry Text="3"
-                                   FontSize="16"
-                                   TextColor="Black"
-                                   Grid.Column="1"/>
-                            </Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Entry Text="ББ:"
-                                   FontSize="16"
-                                   TextColor="Black"/>
-                                <Entry Text="20"
-                                   FontSize="16"
-                                   TextColor="Black"
-                                   Grid.Column="1"/>
-                            </Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Entry Text="Патроны:"
-                                   FontSize="16"
-                                   TextColor="Black"/>
-                                <Entry Text="50"
-                                   FontSize="16"
-                                   TextColor="Black"
-                                   Grid.Column="1"/>
-                            </Grid>
-                        </StackLayout>
-                        <Button Grid.Row="2"
-                            VerticalOptions="End"
-                            HorizontalOptions="End"
-                            HeightRequest="50"
-                            WidthRequest="50"
-                            Text="*"
-                            FontSize="27"
-                            Margin="0, 0, 10, 0"
-                            BackgroundColor="#3377FF"/>
-                    </Grid>
-                </StackLayout>
-            </ScrollView>
-            <Button Grid.Row="1"
-                    HeightRequest="80"
-                    WidthRequest="80"
-                    VerticalOptions="End"
-                    HorizontalOptions="End"
-                    Text="Add"
-                    FontSize="20"
-                    Margin="0, 0, 50, 30"
-                    BackgroundColor="#3377FF"
-                    Command="{Binding AddItemCommand}"/>
-            <!--<Button Grid.Row="1"
-                    HeightRequest="80"
-                    WidthRequest="80"
-                    VerticalOptions="End"
-                    HorizontalOptions="End"
-                    Text="ok"
-                    FontSize="20"
-                    Margin="0, 0, 50, 30"
-                    BackgroundColor="#00DD55"
-                    Command="{Binding SaveItemCommand}"/>-->
+        <Grid Margin="10, 0">
+            <CollectionView BackgroundColor="White"
+                            ItemsSource="{Binding Weapons}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <StackLayout IsVisible="{Binding IsEditable, Converter={StaticResource Not}}">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Title}"
+                                           FontSize="36"
+                                           TextColor="Black"/>
+                                    <Label Text="{Binding AmmoType, StringFormat='{0},'}"
+                                           TextColor="Black"
+                                           VerticalOptions="End"/>
+                                    <Label Text="{Binding Range, StringFormat='{0}м, '}"
+                                           TextColor="Black"
+                                           VerticalOptions="End"/>
+                                    <Label Text="{Binding Weight, StringFormat='{0}кг'}"
+                                           TextColor="Black"
+                                           VerticalOptions="End"/>
+                                    <Label Text="{Binding BonusString, StringFormat='( {0} )'}"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="End"
+                                           FontSize="20"
+                                           TextColor="Black"
+                                           Margin="0, 0, 20, 0"/>
+                                </StackLayout>
+                                <Label Text="{Binding ClipsItems.Count, StringFormat='Обоймы ({0})'}"
+                                       FontSize="16"
+                                       Margin="5, 0, 0, 0"
+                                       TextColor="Black"/>
+                                <CollectionView ItemsSource="{Binding ClipsItems}"
+                                                HeightRequest="50"
+                                                Margin="20, 0, 0, 0">
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout Orientation="Horizontal"/>
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0, 0, 15, 0"
+                                                  RowSpacing="0"
+                                                  ColumnSpacing="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Text="{Binding Value}"
+                                                       FontSize="20"
+                                                       TextColor="Black"/>
+                                                <Label Text="{Binding Capacity, StringFormat='/{0}'}"
+                                                       VerticalOptions="End"
+                                                       Grid.Column="1"/>
+                                                <Label Grid.Row="1"
+                                                       Text="{Binding Title}"
+                                                       HorizontalOptions="Center"
+                                                       Grid.ColumnSpan="2"
+                                                       TextColor="Black"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                                <Label Text="Модификаторы:"
+                                       FontSize="16"
+                                       Margin="5, 0, 0, 0"
+                                       TextColor="Black"/>
+                                <CollectionView ItemsSource="{Binding WeaponModifiers}"
+                                                HeightRequest="{Binding WeaponModifiers.Count, Converter={StaticResource Multiplicator}, ConverterParameter=20}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid HeightRequest="20">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Text="{Binding Title}"
+                                                       TextColor="Black"/>
+                                                <Label Text="{Binding Value, StringFormat='+{0}'}"
+                                                       IsVisible="{Binding Value, Converter={StaticResource NotZeroChecker}}"
+                                                       TextColor="Black"
+                                                       Grid.Column="1"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                                <Label Text="Боеприпасы:"
+                                       FontSize="16"
+                                       Margin="5, 0, 0, 0"
+                                       TextColor="Black"/>
+                                <CollectionView ItemsSource="{Binding AmmoItems}"
+                                                HeightRequest="{Binding AmmoItems.Count, Converter={StaticResource Multiplicator}, ConverterParameter=20}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Text="{Binding Title}"
+                                                       TextColor="Black"/>
+                                                <Label Text="{Binding Value}"
+                                                       Grid.Column="1"
+                                                       TextColor="Black"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+                            <StackLayout IsVisible="{Binding IsEditable}">
+                                <StackLayout Orientation="Horizontal">
+                                    <Editor Text="{Binding Title}"
+                                            Placeholder="Name"
+                                            WidthRequest="150"
+                                            FontSize="36"
+                                            TextColor="Black"/>
+                                    <Editor Text="{Binding AmmoType}"
+                                            Keyboard="Numeric"
+                                            Placeholder="Type"
+                                            WidthRequest="50"
+                                            TextColor="Black"
+                                            VerticalOptions="End"/>
+                                    <Editor Text="{Binding Range}"
+                                            Keyboard="Numeric"
+                                            Placeholder="м."
+                                            WidthRequest="50"
+                                            TextColor="Black"
+                                            VerticalOptions="End"/>
+                                    <Editor Text="{Binding Weight}"
+                                            Keyboard="Numeric"
+                                            Placeholder="кг."
+                                            WidthRequest="30"
+                                            TextColor="Black"
+                                            VerticalOptions="End"/>
+                                    <Editor Text="{Binding Bonus}"
+                                            Keyboard="Numeric"
+                                            Placeholder="+1"
+                                            WidthRequest="30"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="End"
+                                            FontSize="20"
+                                            TextColor="Black"
+                                            Margin="0, 0, 20, 0"/>
+                                </StackLayout>
+                                <Label Text="{Binding ClipsItems.Count, StringFormat='Обоймы ({0})'}"
+                                       FontSize="16"
+                                       Margin="5, 0, 0, 0"
+                                       TextColor="Black"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <CollectionView ItemsSource="{Binding ClipsItems}"
+                                                    Grid.RowSpan="2"
+                                                    HeightRequest="100"
+                                                    Margin="20, 0, 0, 0">
+                                        <CollectionView.ItemsLayout>
+                                            <LinearItemsLayout Orientation="Horizontal"/>
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="0, 0, 15, 0"
+                                                      RowSpacing="0"
+                                                      ColumnSpacing="0">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Editor Text="{Binding Value}"
+                                                            WidthRequest="50"
+                                                            Keyboard="Numeric"
+                                                            FontSize="20"
+                                                            TextColor="Black"/>
+                                                    <Label Text="/"
+                                                           Grid.Column="1"
+                                                           VerticalOptions="Center"
+                                                           FontSize="20"/>
+                                                    <Editor Text="{Binding Capacity}"
+                                                            WidthRequest="50"
+                                                            Keyboard="Numeric"
+                                                            VerticalOptions="End"
+                                                            Grid.Column="2"/>
+                                                    <Editor Grid.Row="1"
+                                                            Text="{Binding Title}"
+                                                            Grid.ColumnSpan="3"
+                                                            TextColor="Black"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                    <Button Grid.Column="1"
+                                            Command="{Binding AddClipCommand}"
+                                            BackgroundColor="#3377FF"
+                                            WidthRequest="40"
+                                            HeightRequest="50"
+                                            Text="+"/>
+                                    <Button Grid.Column="1"
+                                            Command="{Binding RemoveClipCommand}"
+                                            BackgroundColor="#FF6666"
+                                            Grid.Row="1"
+                                            WidthRequest="40"
+                                            HeightRequest="50"
+                                            Text="-"/>
+                                </Grid>
+                                <Label Text="Модификаторы:"
+                                       FontSize="16"
+                                       Margin="5, 0, 0, 0"
+                                       TextColor="Black"/>
+                                <CollectionView ItemsSource="{Binding WeaponModifiers}"
+                                                HeightRequest="{Binding WeaponModifiers.Count, Converter={StaticResource Multiplicator}, ConverterParameter=40}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid HeightRequest="40">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Editor Text="{Binding Title}"
+                                                        TextColor="Black"/>
+                                                <Editor Text="{Binding Value}"
+                                                        TextColor="Black"
+                                                        Grid.Column="1"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                                <Grid>
+                                    <Button Command="{Binding AddModifierCommand}"
+                                            BackgroundColor="#3377FF"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            Text="+"/>
+                                    <Button Grid.Column="1"
+                                            Command="{Binding RemoveModifierCommand}"
+                                            BackgroundColor="#FF6666"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            Text="-"/>
+                                </Grid>
+                                <Label Text="Боеприпасы:"
+                                       FontSize="16"
+                                       Margin="5, 0, 0, 0"
+                                       TextColor="Black"/>
+                                <CollectionView ItemsSource="{Binding AmmoItems}"
+                                                HeightRequest="{Binding AmmoItems.Count, Converter={StaticResource Multiplicator}, ConverterParameter=40}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Editor Text="{Binding Title}"
+                                                        TextColor="Black"/>
+                                                <Editor Text="{Binding Value}"
+                                                        TextColor="Black"
+                                                        Grid.Column="1"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                                <Grid>
+                                    <Button Command="{Binding AddAmmoCommand}"
+                                            BackgroundColor="#3377FF"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            Text="+"/>
+                                    <Button Grid.Column="1"
+                                            Command="{Binding RemoveAmmoCommand}"
+                                            BackgroundColor="#FF6666"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            Text="-"/>
+                                </Grid>
+                                <Grid Margin="0, 20, 0, 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button VerticalOptions="End"
+                                            IsVisible="{Binding IsEditable}"
+                                            Command="{Binding RemoveCommand}"
+                                            HorizontalOptions="End"
+                                            BackgroundColor="#FF6666"
+                                            HeightRequest="70"
+                                            WidthRequest="70"
+                                            Text="-"
+                                            FontSize="24"/>
+                                    <Button VerticalOptions="End"
+                                            Grid.Column="1"
+                                            IsVisible="{Binding IsEditable}"
+                                            Command="{Binding SaveCommand}"
+                                            HorizontalOptions="End"
+                                            BackgroundColor="#00DD55"
+                                            HeightRequest="70"
+                                            WidthRequest="70"
+                                            Text="Ok"
+                                            FontSize="24"
+                                            Margin="20, 0"/>
+                                </Grid>
+                            </StackLayout>
+                            <Button VerticalOptions="End"
+                                    IsVisible="{Binding IsEditable, Converter={StaticResource Not}}"
+                                    Command="{Binding SelectCommand}"
+                                    HorizontalOptions="End"
+                                    BackgroundColor="#3377FF"
+                                    HeightRequest="70"
+                                    WidthRequest="70"
+                                    Text="*"
+                                    FontSize="50"
+                                    Margin="20, 0"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Text="{Binding TotalInfo}"
+                   TextColor="Black"
+                   VerticalOptions="End"
+                   HorizontalOptions="End"
+                   Margin="0, 0, 20, 5"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

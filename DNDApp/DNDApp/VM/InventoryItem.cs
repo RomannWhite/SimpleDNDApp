@@ -6,14 +6,12 @@ using System;
 
 namespace DNDApp.VM
 {
-    public class InventoryItem : BaseItem
+    public class InventoryItem : CountableItem
     {
-        static List<InventoryItem> AllItems = new List<InventoryItem>();
         public event EventHandler RemoveEvent;
         public static event EventHandler ChangeEvent;
-        public InventoryItem()
+        public InventoryItem() : base()
         {
-            AllItems.Add(this);
             SelectCommand = new Command(OnSelect);
             SaveCommand = new Command(OnSave);
             AddCommand = new Command(OnAdd);
@@ -29,9 +27,6 @@ namespace DNDApp.VM
             else
             {
                 RemoveEvent?.Invoke(this, EventArgs.Empty);
-                AllItems.Remove(this);
-                Data.DataKeeper.SaveInventory(AllItems);
-                ChangeEvent?.Invoke(null, EventArgs.Empty);
             }
         }
         void OnAdd(object obj)
@@ -40,17 +35,15 @@ namespace DNDApp.VM
         }
         void OnSelect(object obj)
         {
-            foreach (InventoryItem item in AllItems)
-                item.IsEditable = false;
             IsEditable = true;
         }
         void OnSave(object obj)
         {
             IsEditable = false;
-            Data.DataKeeper.SaveInventory(AllItems);
             ChangeEvent?.Invoke(null, EventArgs.Empty);
         }
         #endregion
+        [JsonIgnore]
         int price;
         public int Price
         {
@@ -58,16 +51,6 @@ namespace DNDApp.VM
             set
             {
                 price = value;
-                OnPropertyChanged();
-            }
-        }
-        int weight;
-        public int Weight
-        {
-            get => weight;
-            set
-            {
-                weight = value;
                 OnPropertyChanged();
             }
         }
